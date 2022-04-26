@@ -34,7 +34,22 @@ exports.create = (req, res) => {
       res.send(getStandardRespond(true, "Video was uploaded", result));
     })
     .catch((err) => {
-      res.status(409).send({
+      let nameError = "";
+      let idYtError = "";
+      let descError = "";
+      if (err.errors.name) {
+        nameError = err.errors.name.kind;
+      }
+      if (err.errors.idYt) {
+        idYtError = err.errors.idYt.kind;
+      }
+      if (err.errors.desc) {
+        descError = err.errors.desc.kind;
+      }
+      res.status(422).send({
+        name: nameError,
+        idYt: idYtError,
+        desc: descError,
         message: err.message || "Some error while create videos.",
       });
     });
