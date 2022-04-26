@@ -1,6 +1,7 @@
 const db = require("../models");
 const Video = db.videos;
 const getStandardRespond = require("../../utils/standard-respond");
+const fs = require("fs");
 
 exports.findAll = (req, res) => {
   Video.find()
@@ -60,7 +61,7 @@ exports.findOne = (req, res) => {
 
   Video.findById(id)
     .then((result) => {
-      res.send(result);
+      res.send(getStandardRespond(true, "Video", result));
     })
     .catch((err) => {
       res.status(409).send({
@@ -101,7 +102,11 @@ exports.delete = (req, res) => {
           message: "Video not found",
         });
       }
-
+      try {
+        fs.unlinkSync(result.thumbnail);
+      } catch (err) {
+        console.log(err.message);
+      }
       res.send({
         message: "Video was deleted",
       });
