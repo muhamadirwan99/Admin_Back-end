@@ -17,6 +17,10 @@ module.exports = (mongoose) => {
         type: String,
         required: true,
       },
+      modul: {
+        type: String,
+        required: true,
+      },
     },
     {
       timestamps: true,

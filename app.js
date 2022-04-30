@@ -7,24 +7,69 @@ const PORT = 5000;
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "images");
+    // setting destination of uploading files
+    if (file.fieldname === "modul") {
+      // if uploading modul
+      cb(null, "public/moduls");
+    } else {
+      // else uploading image
+      cb(null, "public/images");
+    }
   },
   filename: (req, file, cb) => {
     cb(null, new Date().getTime() + "-" + file.originalname);
   },
 });
 
+// const fileStorage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "public/images");
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, new Date().getTime() + "-" + file.originalname);
+//   },
+// });
+
 const fileFilter = (req, file, cb) => {
-  if (
-    file.mimetype === "image/png" ||
-    file.mimetype === "image/jpg" ||
-    file.mimetype === "image/jpeg"
-  ) {
-    cb(null, true);
+  if (file.fieldname === "modul") {
+    // if uploading resume
+    if (
+      file.mimetype === "application/pdf" ||
+      file.mimetype === "application/msword" ||
+      file.mimetype ===
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    ) {
+      // check file type to be pdf, doc, or docx
+      cb(null, true);
+    } else {
+      cb(null, false); // else fails
+    }
   } else {
-    cb(null, false);
+    // else uploading image
+    if (
+      file.mimetype === "image/png" ||
+      file.mimetype === "image/jpg" ||
+      file.mimetype === "image/jpeg"
+    ) {
+      // check file type to be png, jpeg, or jpg
+      cb(null, true);
+    } else {
+      cb(null, false); // else fails
+    }
   }
 };
+
+// const fileFilter = (req, file, cb) => {
+//   if (
+//     file.mimetype === "image/png" ||
+//     file.mimetype === "image/jpg" ||
+//     file.mimetype === "image/jpeg"
+//   ) {
+//     cb(null, true);
+//   } else {
+//     cb(null, false);
+//   }
+// };
 
 app.use(
   cors({
@@ -32,16 +77,37 @@ app.use(
   })
 );
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "50mb", extended: true }));
+app.use(
+  express.urlencoded({ limit: "500mb", parameterLimit: 100000, extended: true })
+);
 
 // Setup change directory to public
-app.use("/images", express.static("images"));
+app.use("/public/images", express.static("public/images"));
+app.use("/public/modul", express.static("public/moduls"));
 
 // Setup middleware multer
 app.use(
-  multer({ storage: fileStorage, fileFilter: fileFilter }).single("thumbnail")
+  multer({
+    storage: fileStorage,
+    fileFilter: fileFilter,
+  }).fields([
+    {
+      name: "thumbnail",
+      maxCount: 1,
+    },
+    {
+      name: "modul",
+      maxCount: 1,
+    },
+  ])
 );
+// app.use(
+//   multer({ storage: fileStorage, fileFilter: fileFilter }).single("modul")
+// );
+// app.use(
+//   multer({ storage: modulStorage, fileFilter: modulFilter }).single("modul")
+// );
 
 // Configuration mongoose
 const db = require("./app/models/");

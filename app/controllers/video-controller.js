@@ -16,8 +16,8 @@ exports.findAll = (req, res) => {
 };
 
 exports.create = (req, res) => {
-  if (!req.file) {
-    const err = new Error("Image must be uploaded!");
+  if (req.files.thumbnail === undefined || req.files.modul === undefined) {
+    const err = new Error("Image and modul must be uploaded!");
     err.errorStatus = 422;
     throw err;
   }
@@ -26,7 +26,8 @@ exports.create = (req, res) => {
     name: req.body.name,
     idYt: req.body.idYt,
     desc: req.body.desc,
-    thumbnail: req.file.path.replace("\\", "/"),
+    thumbnail: req.files.thumbnail[0].path.replace("\\", "/"),
+    modul: req.files.modul[0].path.replace("\\", "/"),
   });
 
   video
