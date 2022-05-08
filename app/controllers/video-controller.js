@@ -105,6 +105,7 @@ exports.delete = (req, res) => {
       }
       try {
         fs.unlinkSync(result.thumbnail);
+        fs.unlinkSync(result.modul);
       } catch (err) {
         console.log(err.message);
       }

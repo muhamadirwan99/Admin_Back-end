@@ -1,12 +1,12 @@
 module.exports = (app) => {
-  const posts = require("../controllers/video-controller");
+  const videos = require("../controllers/video-controller");
   const router = require("express").Router();
 
-  router.get("/", posts.findAll);
-  router.post("/", posts.create);
-  router.get("/:id", posts.findOne);
-  router.put("/:id", posts.update);
-  router.delete("/:id", posts.delete);
+  router.get("/", videos.findAll);
+  router.post("/", videos.create);
+  router.get("/:id", videos.findOne);
+  router.put("/:id", videos.update);
+  router.delete("/:id", videos.delete);
 
   app.use("/api/videos", router);
 };

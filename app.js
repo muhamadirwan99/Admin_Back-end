@@ -21,15 +21,6 @@ const fileStorage = multer.diskStorage({
   },
 });
 
-// const fileStorage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "public/images");
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, new Date().getTime() + "-" + file.originalname);
-//   },
-// });
-
 const fileFilter = (req, file, cb) => {
   if (file.fieldname === "modul") {
     // if uploading resume
@@ -59,17 +50,26 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-// const fileFilter = (req, file, cb) => {
-//   if (
-//     file.mimetype === "image/png" ||
-//     file.mimetype === "image/jpg" ||
-//     file.mimetype === "image/jpeg"
-//   ) {
-//     cb(null, true);
-//   } else {
-//     cb(null, false);
-//   }
-// };
+const webinarStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, new Date().getTime() + "-" + file.originalname);
+  },
+});
+
+const webinarFilter = (req, file, cb) => {
+  if (
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/jpeg"
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
 
 app.use(
   cors({
@@ -102,12 +102,6 @@ app.use(
     },
   ])
 );
-// app.use(
-//   multer({ storage: fileStorage, fileFilter: fileFilter }).single("modul")
-// );
-// app.use(
-//   multer({ storage: modulStorage, fileFilter: modulFilter }).single("modul")
-// );
 
 // Configuration mongoose
 const db = require("./app/models/");
@@ -136,6 +130,12 @@ require("./app/routes/post-routes")(app);
 
 // Call routes video
 require("./app/routes/video-routes")(app);
+
+// Call routes webinar
+require("./app/routes/webinar-routes")(app);
+
+// Call routes tips
+require("./app/routes/tips-routes")(app);
 
 // Setup listen port
 app.listen(PORT, () => {
