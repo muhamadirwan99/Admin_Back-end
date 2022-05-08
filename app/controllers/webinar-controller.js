@@ -93,11 +93,6 @@ exports.update = (req, res) => {
   if (req.files.thumbnail === undefined) {
     thumb = req.body.thumbnail;
   } else {
-    try {
-      fs.unlinkSync(req.body.thumbnail);
-    } catch (err) {
-      console.log(err.message);
-    }
     thumb = req.files.thumbnail[0].path.replace("\\", "/");
   }
 
@@ -109,8 +104,6 @@ exports.update = (req, res) => {
     thumbnail: thumb,
     status: req.body.status,
   };
-
-  console.log(webinar.thumbnail);
 
   Webinar.findByIdAndUpdate(id, webinar)
     .then((result) => {

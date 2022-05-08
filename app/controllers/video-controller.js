@@ -77,7 +77,29 @@ exports.findOne = (req, res) => {
 exports.update = (req, res) => {
   const id = req.params.id;
 
-  Video.findByIdAndUpdate(id, req.body)
+  let thumbnail = null;
+  let modul = null;
+
+  if (req.files.thumbnail === undefined) {
+    thumbnail = req.body.thumbnail;
+  } else {
+    thumbnail = req.files.thumbnail[0].path.replace("\\", "/");
+  }
+  if (req.files.modul === undefined) {
+    modul = req.body.modul;
+  } else {
+    modul = req.files.modul[0].path.replace("\\", "/");
+  }
+
+  const video = {
+    name: req.body.name,
+    idYt: req.body.idYt,
+    desc: req.body.desc,
+    thumbnail,
+    modul,
+  };
+
+  Video.findByIdAndUpdate(id, video)
     .then((result) => {
       if (!result) {
         res.status(404).send({
