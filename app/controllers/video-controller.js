@@ -17,9 +17,12 @@ exports.findAll = (req, res) => {
 
 exports.create = (req, res) => {
   if (req.files.thumbnail === undefined || req.files.modul === undefined) {
-    const err = new Error("Image and modul must be uploaded!");
-    err.errorStatus = 422;
-    throw err;
+    const err = "Image and modul must be uploaded!";
+
+    res.status(422).send({
+      file: err,
+      message: err.message || "Some error while uploaded image and modul.",
+    });
   }
 
   const video = new Video({
