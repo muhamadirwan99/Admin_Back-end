@@ -1,7 +1,6 @@
 const db = require("../models");
 const Tips = db.tips;
 const getStandardRespond = require("../../utils/standard-respond");
-const fs = require("fs");
 
 exports.findAll = (req, res) => {
   Tips.find()
@@ -104,6 +103,20 @@ exports.delete = (req, res) => {
     .catch((err) => {
       res.status(409).send({
         message: err.message || "Some error while delete tips.",
+      });
+    });
+};
+
+exports.findCategory = (req, res) => {
+  const category = req.params.category;
+
+  Tips.find({ category })
+    .then((result) => {
+      res.send(getStandardRespond(true, category, result));
+    })
+    .catch((err) => {
+      res.status(409).send({
+        message: err.message || "Some error while show tips.",
       });
     });
 };

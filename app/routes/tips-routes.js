@@ -7,6 +7,7 @@ module.exports = (app) => {
   router.get("/:id", tips.findOne);
   router.put("/:id", tips.update);
   router.delete("/:id", tips.delete);
+  router.get("/category/:category", tips.findCategory);
 
   app.use("/api/tips", router);
 };
