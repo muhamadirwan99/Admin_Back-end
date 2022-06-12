@@ -144,3 +144,17 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+exports.findRecent = (req, res) => {
+  Video.find()
+    .sort({ createdAt: -1 })
+    .limit(5)
+    .then((result) => {
+      res.send(getStandardRespond(true, "List recent videos", result));
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error while retrieving videos.",
+      });
+    });
+};
