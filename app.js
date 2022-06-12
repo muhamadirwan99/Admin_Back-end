@@ -4,6 +4,7 @@ const multer = require("multer");
 
 const app = express();
 const PORT = 5000;
+const ADDRESS = process.env.NODE_ENV !== "production" ? "localhost" : "0.0.0.0";
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -138,6 +139,6 @@ require("./app/routes/webinar-routes")(app);
 require("./app/routes/tips-routes")(app);
 
 // Setup listen port
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+app.listen(PORT, ADDRESS, () => {
+  console.log(`Server is running on http://${ADDRESS}:${PORT}`);
 });
