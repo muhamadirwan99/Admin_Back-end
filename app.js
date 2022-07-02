@@ -51,27 +51,6 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-const webinarStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "public/images");
-  },
-  filename: (req, file, cb) => {
-    cb(null, new Date().getTime() + "-" + file.originalname);
-  },
-});
-
-const webinarFilter = (req, file, cb) => {
-  if (
-    file.mimetype === "image/png" ||
-    file.mimetype === "image/jpg" ||
-    file.mimetype === "image/jpeg"
-  ) {
-    cb(null, true);
-  } else {
-    cb(null, false);
-  }
-};
-
 app.use(
   cors({
     origin: "*",
@@ -85,7 +64,7 @@ app.use(
 
 // Setup change directory to public
 app.use("/public/images", express.static("public/images"));
-app.use("/public/modul", express.static("public/moduls"));
+app.use("/public/moduls", express.static("public/moduls"));
 
 // Setup middleware multer
 app.use(
