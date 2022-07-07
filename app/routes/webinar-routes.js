@@ -7,6 +7,7 @@ module.exports = (app) => {
   router.get("/:id", webinars.findOne);
   router.put("/:id", webinars.update);
   router.delete("/:id", webinars.delete);
+  router.get("/update/recent", webinars.findRecent);
 
   app.use("/api/webinars", router);
 };

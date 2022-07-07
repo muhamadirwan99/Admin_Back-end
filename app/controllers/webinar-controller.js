@@ -149,3 +149,17 @@ exports.delete = (req, res) => {
       });
     });
 };
+
+exports.findRecent = (req, res) => {
+  Webinar.find()
+    .sort({ createdAt: -1 })
+    .limit(3)
+    .then((result) => {
+      res.send(getStandardRespond(true, "List recent webinars", result));
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error while retrieving webinar.",
+      });
+    });
+};

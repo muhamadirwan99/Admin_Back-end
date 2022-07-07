@@ -148,7 +148,7 @@ exports.delete = (req, res) => {
 exports.findRecent = (req, res) => {
   Video.find()
     .sort({ createdAt: -1 })
-    .limit(5)
+    .limit(3)
     .then((result) => {
       res.send(getStandardRespond(true, "List recent videos", result));
     })
