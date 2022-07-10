@@ -32,6 +32,7 @@ exports.create = (req, res) => {
     date: req.body.date,
     thumbnail: req.files.thumbnail[0].path.replace("\\", "/"),
     status: req.body.status,
+    search: req.body.name.toLowerCase(),
   });
 
   webinar
@@ -167,13 +168,13 @@ exports.findRecent = (req, res) => {
 exports.findByName = (req, res) => {
   const name = req.query.name;
 
-  Webinar.find({ name: { $regex: ".*" + name.toLowerCase() + ".*" } })
+  Webinar.find({ search: { $regex: ".*" + name.toLowerCase() + ".*" } })
     .then((result) => {
-      res.send(getStandardRespond(true, "List Search Results", result));
+      res.send(getStandardRespond(true, "List Search Webinar Results", result));
     })
     .catch((err) => {
       res.status(409).send({
-        message: err.message || "Some error while retrieving webinar.",
+        message: err.message || "Some error while retrieving webinars.",
       });
     });
 };

@@ -25,6 +25,10 @@ module.exports = (mongoose) => {
         type: Boolean,
         required: true,
       },
+      search: {
+        type: String,
+        required: true,
+      },
     },
     {
       timestamps: true,

@@ -31,6 +31,7 @@ exports.create = (req, res) => {
     desc: req.body.desc,
     thumbnail: req.files.thumbnail[0].path.replace("\\", "/"),
     modul: req.files.modul[0].path.replace("\\", "/"),
+    search: req.body.name.toLowerCase(),
   });
 
   video
@@ -77,13 +78,13 @@ exports.findOne = (req, res) => {
 exports.findByName = (req, res) => {
   const name = req.query.name;
 
-  Video.find({ name: { $regex: ".*" + name.toLowerCase() + ".*" } })
+  Video.find({ search: { $regex: ".*" + name.toLowerCase() + ".*" } })
     .then((result) => {
-      res.send(getStandardRespond(true, "Video", result));
+      res.send(getStandardRespond(true, "List Search Video Results", result));
     })
     .catch((err) => {
       res.status(409).send({
-        message: err.message || "Some error while show videos.",
+        message: err.message || "Some error while retrieving videos.",
       });
     });
 };
