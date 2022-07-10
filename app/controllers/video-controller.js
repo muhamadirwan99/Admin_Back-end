@@ -74,6 +74,20 @@ exports.findOne = (req, res) => {
     });
 };
 
+exports.findByName = (req, res) => {
+  const name = req.query.name;
+
+  Video.find({ name: { $regex: ".*" + name + ".*" } })
+    .then((result) => {
+      res.send(getStandardRespond(true, "Video", result));
+    })
+    .catch((err) => {
+      res.status(409).send({
+        message: err.message || "Some error while show videos.",
+      });
+    });
+};
+
 exports.update = (req, res) => {
   const id = req.params.id;
 

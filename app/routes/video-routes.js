@@ -7,6 +7,7 @@ module.exports = (app) => {
   router.get("/:id", videos.findOne);
   router.put("/:id", videos.update);
   router.delete("/:id", videos.delete);
+  router.get("/search", videos.findByName);
   router.get("/update/recent", videos.findRecent);
 
   app.use("/api/videos", router);
