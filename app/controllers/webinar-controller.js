@@ -167,7 +167,7 @@ exports.findRecent = (req, res) => {
 exports.findByName = (req, res) => {
   const name = req.query.name;
 
-  Webinar.find({ name: { $regex: ".*" + name + ".*" } })
+  Webinar.find({ name: { $regex: ".*" + name.toLowerCase() + ".*" } })
     .then((result) => {
       res.send(getStandardRespond(true, "List Search Results", result));
     })

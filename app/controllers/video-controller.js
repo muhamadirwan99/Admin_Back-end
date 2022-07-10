@@ -77,7 +77,7 @@ exports.findOne = (req, res) => {
 exports.findByName = (req, res) => {
   const name = req.query.name;
 
-  Video.find({ name: { $regex: ".*" + name + ".*" } })
+  Video.find({ name: { $regex: ".*" + name.toLowerCase() + ".*" } })
     .then((result) => {
       res.send(getStandardRespond(true, "Video", result));
     })
