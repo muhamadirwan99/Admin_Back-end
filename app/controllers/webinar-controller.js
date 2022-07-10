@@ -163,3 +163,17 @@ exports.findRecent = (req, res) => {
       });
     });
 };
+
+exports.findByName = (req, res) => {
+  const name = req.query.name;
+
+  Webinar.find({ name: { $regex: ".*" + name + ".*" } })
+    .then((result) => {
+      res.send(getStandardRespond(true, "List Search Results", result));
+    })
+    .catch((err) => {
+      res.status(409).send({
+        message: err.message || "Some error while retrieving webinar.",
+      });
+    });
+};

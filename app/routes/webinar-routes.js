@@ -4,9 +4,10 @@ module.exports = (app) => {
 
   router.get("/", webinars.findAll);
   router.post("/", webinars.create);
-  router.get("/:id", webinars.findOne);
+  // router.get("/:id", webinars.findOne);
   router.put("/:id", webinars.update);
   router.delete("/:id", webinars.delete);
+  router.get("/search", webinars.findByName);
   router.get("/update/recent", webinars.findRecent);
 
   app.use("/api/webinars", router);
