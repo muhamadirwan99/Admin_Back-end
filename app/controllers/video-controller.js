@@ -4,9 +4,16 @@ const getStandardRespond = require("../../utils/standard-respond");
 const fs = require("fs");
 
 exports.findAll = (req, res) => {
+  const page = req.query.page;
+  const limit = req.query.limit;
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+
   Video.find()
     .then((result) => {
-      res.send(getStandardRespond(true, "List videos", result));
+      const videoSlice = result.slice(startIndex, endIndex);
+
+      res.send(getStandardRespond(true, "List videos", videoSlice));
     })
     .catch((err) => {
       res.status(500).send({
