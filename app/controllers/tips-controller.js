@@ -31,8 +31,8 @@ exports.create = (req, res) => {
       let nameError = "";
       let descError = "";
 
-      if (err.errors.categoryError) {
-        idYtError = err.errors.categoryError.kind;
+      if (err.errors.category) {
+        categoryError = err.errors.category.kind;
       }
       if (err.errors.name) {
         nameError = err.errors.name.kind;
@@ -42,8 +42,8 @@ exports.create = (req, res) => {
       }
 
       res.status(422).send({
+        category: categoryError,
         name: nameError,
-        idYt: idYtError,
         desc: descError,
         message: err.message || "Some error while create tips.",
       });
