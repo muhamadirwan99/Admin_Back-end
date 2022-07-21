@@ -48,7 +48,7 @@ exports.create = (req, res) => {
     name: req.body.name,
     idYt: req.body.idYt,
     desc: req.body.desc,
-    thumbnail: `https://img.youtube.com/vi/${req.body.idYt}/sddefault.jpg`,
+    thumbnail: `https://img.youtube.com/vi/${req.body.idYt}/mqdefault.jpg`,
     modul: req.files.modul[0].path.replace("\\", "/"),
     search: req.body.name.toLowerCase(),
   });
