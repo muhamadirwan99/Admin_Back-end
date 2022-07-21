@@ -3,6 +3,7 @@ module.exports = (app) => {
   const router = require("express").Router();
 
   router.get("/", webinars.findAll);
+  router.get("/pagination", webinars.findPagination);
   router.post("/", webinars.create);
   router.get("/:id", webinars.findOne);
   router.put("/:id", webinars.update);

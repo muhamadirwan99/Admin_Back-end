@@ -3,6 +3,7 @@ module.exports = (app) => {
   const router = require("express").Router();
 
   router.get("/", videos.findAll);
+  router.get("/pagination", videos.findPagination);
   router.post("/", videos.create);
   router.get("/:id", videos.findOne);
   router.put("/:id", videos.update);

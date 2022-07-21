@@ -4,6 +4,18 @@ const getStandardRespond = require("../../utils/standard-respond");
 const fs = require("fs");
 
 exports.findAll = (req, res) => {
+  Webinar.find()
+    .then((result) => {
+      res.send(getStandardRespond(true, "List webinars", result));
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error while retrieving webinars.",
+      });
+    });
+};
+
+exports.findPagination = (req, res) => {
   const page = req.query.page;
   const limit = req.query.limit;
   const startIndex = (page - 1) * limit;
