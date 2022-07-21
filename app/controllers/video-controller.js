@@ -35,12 +35,12 @@ exports.findPagination = (req, res) => {
 };
 
 exports.create = (req, res) => {
-  if (req.files.thumbnail === undefined || req.files.modul === undefined) {
-    const err = "Image and modul must be uploaded!";
+  if (req.files.modul === undefined) {
+    const err = "Modul must be uploaded!";
 
     res.status(422).send({
       file: err,
-      message: err.message || "Some error while uploaded image and modul.",
+      message: err.message || "Some error while uploaded modul.",
     });
   }
 
@@ -48,7 +48,7 @@ exports.create = (req, res) => {
     name: req.body.name,
     idYt: req.body.idYt,
     desc: req.body.desc,
-    thumbnail: req.files.thumbnail[0].path.replace("\\", "/"),
+    thumbnail: `https://img.youtube.com/vi/${req.body.idYt}/sddefault.jpg`,
     modul: req.files.modul[0].path.replace("\\", "/"),
     search: req.body.name.toLowerCase(),
   });
