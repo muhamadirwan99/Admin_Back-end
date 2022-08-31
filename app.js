@@ -117,6 +117,9 @@ require("./app/routes/webinar-routes")(app);
 // Call routes tips
 require("./app/routes/tips-routes")(app);
 
+// Call routes kisah
+require("./app/routes/kisah-routes")(app);
+
 // Setup listen port
 app.listen(PORT, ADDRESS, () => {
   console.log(`Server is running on http://${ADDRESS}:${PORT}`);
