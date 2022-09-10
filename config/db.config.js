@@ -1,3 +1,3 @@
 module.exports = {
-  url: "mongodb://localhost:27017/collect_digid",
+  url: "mongodb://localhost:27017/collect_udp",
 };
