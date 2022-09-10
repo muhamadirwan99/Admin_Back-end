@@ -28,7 +28,7 @@ exports.create = (req, res) => {
   const kisah = new Kisah({
     name: req.body.name,
     sumber: req.body.sumber,
-    link: req.body.desc,
+    link: req.body.link,
     thumbnail: req.files.thumbnail[0].path.replace("\\", "/"),
   });
 
@@ -38,7 +38,7 @@ exports.create = (req, res) => {
       res.send(getStandardRespond(true, "Kisah was uploaded", result));
     })
     .catch((err) => {
-      let nameError = "";
+      console.log(err.errors);
       let sumberError = "";
       let linkError = "";
       if (err.errors.name) {
