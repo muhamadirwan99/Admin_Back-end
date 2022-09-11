@@ -88,6 +88,7 @@ exports.update = (req, res) => {
     name: req.body.name,
     sumber: req.body.sumber,
     link: req.body.link,
+    thumbnail: thumbnail,
   };
 
   Kisah.findByIdAndUpdate(id, kisah)
